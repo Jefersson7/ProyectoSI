@@ -13,12 +13,14 @@ import java.util.ArrayList;
 public class Nodo {
     
     public ArrayList nodosHijos = new ArrayList();
+    public String label = "";
     public String info = "";
     public int preOrder = 0;
     public int postOrder = 0;
     
-    public Nodo(String theInfo) {
+    public Nodo(String theLabel, String theInfo) {
         this.setInfo(theInfo);
+        this.setLabel(theLabel);
     }
     
     public String getInfo() {
@@ -29,6 +31,13 @@ public class Nodo {
         this.info = theInfo;
     }
     
+    public String getLabel() {
+        return this.label;
+    }
+    
+    public void setLabel(String theLabel) {
+        this.label = theLabel;
+    }
     public int getPostOrder() {
         return postOrder;
     }

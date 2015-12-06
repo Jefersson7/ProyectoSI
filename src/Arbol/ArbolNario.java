@@ -22,32 +22,32 @@ public class ArbolNario {
         raiz = null;
     }
     
-    public void insertarHijo(String padre, String info){
-        Nodo aux = new Nodo(info);
+    public void insertarHijo(String padre, String label, String info){
+        Nodo aux = new Nodo(label, info);
         if (raiz == null){
             raiz = aux;
-            this.preOrder();
-            this.postOrder();
-            //System.out.println("Raíz insertada" + info);
+            System.out.println("Raíz insertada = " + label);
         } else if (padre.equals("")) {
             System.out.println("Padre vacío");
         } else {
-            this.insertarHijo(raiz, padre, info);
-            this.preOrder();
-            this.postOrder();
+            this.insertarHijo(raiz, padre, label, info);
         }
     }
-    private void insertarHijo(Nodo nodoActual, String padre, String theInfo){
-        if (nodoActual.getInfo().equals(padre)) {
-            nodoActual.nodosHijos.add(new Nodo(theInfo));
-            System.out.println("Nodo insertado = " + theInfo);
+    private void insertarHijo(Nodo nodoActual, String padre, String theLabel, String theInfo){
+        if (nodoActual.getLabel().equals(padre)) {
+            nodoActual.nodosHijos.add(new Nodo(theLabel, theInfo));
+            System.out.println("Nodo insertado = " + theLabel);
         } else {
             for (int i = 0; i < nodoActual.nodosHijos.size(); i++){
-                this.insertarHijo((Nodo)nodoActual.nodosHijos.get(i), padre, theInfo);
+                this.insertarHijo((Nodo)nodoActual.nodosHijos.get(i), padre, theLabel, theInfo);
             }
         }
     }
     
+    public void imprimirRecorridos() {
+        this.preOrder();
+        this.postOrder();
+    }
     public void preOrder() {
         contPreOrder = 0;
         this.preOrder(raiz);
@@ -79,7 +79,7 @@ public class ArbolNario {
         contPostOrder++;
         nodoActual.setPostOrder(contPostOrder);
         this.agregarEnIndex(nodoActual, false, true);
-        System.out.println("Postorden de " + nodoActual.getInfo() + "= " + nodoActual.getPostOrder());
+        System.out.println("Postorden de " + nodoActual.getLabel() + "= " + nodoActual.getPostOrder());
     }
     
     private void agregarEnIndex(Nodo nodoActual, boolean esPreOrder, boolean esPostOrder) {
@@ -129,7 +129,7 @@ public class ArbolNario {
         //System.out.println("Nodo Papa: " + nodoActual.getInfo());
         for (int i = 0; i < nodoActual.nodosHijos.size(); i++) {
             aux = (Nodo)nodoActual.nodosHijos.get(i);
-            System.out.println("Nodo Papa: " + nodoActual.getInfo()+ " -- Nodo hijo: " + aux.getInfo());
+            System.out.println("Nodo Papa: " + nodoActual.getLabel()+ " -- Nodo hijo: " + aux.getLabel());
             this.imprimirNodo(aux);
         }
     }
