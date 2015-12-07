@@ -6,7 +6,15 @@
 package proyectosi;
 
 import Arbol.ArbolNario;
+import java.io.File;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import javax.swing.JFileChooser;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
 
 /**
  *
@@ -17,6 +25,10 @@ public class Programador_Eventos extends javax.swing.JFrame {
     /**
      * Creates new form Programador_Eventos
      */
+    public double temperatura, humedad, viento, precipitacion, clo;
+    private String date;
+    public LocalDateTime fecha;
+    
     public Programador_Eventos() {
         initComponents();
     }
@@ -30,11 +42,28 @@ public class Programador_Eventos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        Date jDateChooser2 = new Date();
+        SpinnerDateModel sm =
+        new SpinnerDateModel(jDateChooser2, null, null, Calendar.HOUR_OF_DAY);
+        jSpinner2 = new javax.swing.JSpinner(sm);
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Cargar Archivo");
+        jLabel1.setText("Bienvenidos al programador de eventos. ");
+
+        jLabel3.setText("Fecha y Hora del Evento");
+
+        JSpinner.DateEditor de = new JSpinner.DateEditor(jSpinner2, "HH:mm:ss");
+        jSpinner2.setEditor(de);
+        jSpinner2.setToolTipText("00:00:00");
+
+        jDateChooser1.setDateFormatString("yyyy-MM-dd");
+
+        jButton1.setText("Evaluar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -47,22 +76,52 @@ public class Programador_Eventos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(251, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        crearArbol();
+        int dia = jDateChooser1.getCalendar().get(Calendar.DAY_OF_MONTH);
+        int  mes = jDateChooser1.getCalendar().get(Calendar.MONTH)+1;
+        int año = jDateChooser1.getCalendar().get(Calendar.YEAR);
+        Format formatter = new SimpleDateFormat("HH:mm:ss");
+        String hour  = formatter.format(jSpinner2.getValue());
+        String[] s = hour.split(":");
+        int hora = Integer.parseInt(s[0]);
+        int minuto = Integer.parseInt(s[1]);
+        fecha = LocalDateTime.of(año, mes, dia, hora, minuto);
+        File f = new File("Datos climaticos.xlsx");
+        recorrerArchivo ra = new recorrerArchivo(f, fecha);
+        
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**
@@ -102,6 +161,10 @@ public class Programador_Eventos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JSpinner jSpinner2;
     // End of variables declaration//GEN-END:variables
 
     public void crearArbol() {
