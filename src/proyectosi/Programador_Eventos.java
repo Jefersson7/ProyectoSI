@@ -243,23 +243,23 @@ public class Programador_Eventos extends javax.swing.JFrame {
         }
         if(temperatura > 53.6 && temperatura <= 60.8)  {
             Pet = 3; 
-            if(humedad < 65 && precipitacion < 0.7 && viento < 30 ) return "SI";
+            if(humedad < 65 && precipitacion < 70 && viento < 30 ) return "SI";
         }
         if(temperatura > 60.8 && temperatura <= 66.2) {
             Pet = 4; 
-            if(humedad < 65 && precipitacion < 0.7 && viento < 30 )  return "SI";
+            if(humedad < 65 && precipitacion < 70 && viento < 30 )  return "SI";
         }
         if(temperatura > 66.2 && temperatura <= 75.2) {
             Pet = 5; 
-            if(precipitacion < 0.7 && viento < 30 )  return "SI";
+            if(precipitacion < 70 && viento < 30 )  return "SI";
         }
         if(temperatura > 75.2 && temperatura <= 78.8) {
             Pet = 6; 
-            if(humedad > 65 && precipitacion < 0.7 && viento < 30 )  return "SI";
+            if(humedad > 65 && precipitacion < 70 && viento < 30 )  return "SI";
         }
         if(temperatura > 78.8 && temperatura <= 89.6) {
             Pet = 7; 
-            if(humedad > 65 && precipitacion < 0.7 && viento < 30 )  return "SI";
+            if(humedad > 65 && precipitacion < 70 && viento < 30 )  return "SI";
         }
         if((temperatura > 89.6 && temperatura <= 104)) {
             Pet = 8; return "NO";
