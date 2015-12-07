@@ -5,7 +5,7 @@
  */
 package proyectosi;
 
-import Arbol.ArbolNario;
+import Arbol.*;
 import java.io.File;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -26,7 +26,8 @@ public class Programador_Eventos extends javax.swing.JFrame {
      * Creates new form Programador_Eventos
      */
     public double temperatura, humedad, viento, precipitacion, clo;
-    private String date;
+    public String date, decision, PetDescription;
+    public int Pet;
     public LocalDateTime fecha;
     
     public Programador_Eventos() {
@@ -110,6 +111,7 @@ public class Programador_Eventos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        temperatura = 0.0; viento = 0.0; humedad = 0.0; precipitacion = 0.0;
         int dia = jDateChooser1.getCalendar().get(Calendar.DAY_OF_MONTH);
         int  mes = jDateChooser1.getCalendar().get(Calendar.MONTH)+1;
         int año = jDateChooser1.getCalendar().get(Calendar.YEAR);
@@ -120,8 +122,25 @@ public class Programador_Eventos extends javax.swing.JFrame {
         int minuto = Integer.parseInt(s[1]);
         fecha = LocalDateTime.of(año, mes, dia, hora, minuto);
         File f = new File("Datos climaticos.xlsx");
-        recorrerArchivo ra = new recorrerArchivo(f, fecha);
-        
+        recorrerArchivo ra = new recorrerArchivo();
+        ra.recorrer(f, fecha);
+        temperatura = ra.totalTemperatura / ra.numRegistrosLeidos;
+        humedad = ra.totalHumedad / ra.numRegistrosLeidos;
+        viento = ra.totalViento / ra.numRegistrosLeidos;
+        precipitacion = ra.totalPrecipitacion / ra.numRegistrosLeidos;
+        System.out.println(temperatura);
+        System.out.println(humedad);
+        System.out.println(viento);
+        System.out.println(precipitacion);
+        ArbolNario arbol = new ArbolNario();
+        crearArbol(arbol);
+        //arbol.imprimirArbol(arbol);
+        decision = setDecision();
+        PetDescription = ((Nodo)arbol.raiz.nodosHijos.get(Pet-1)).getLabel();
+        System.out.println(PetDescription);
+        Resultados results = new Resultados();
+        results.jLabel1.setText(decision);
+        results.setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**
@@ -167,10 +186,8 @@ public class Programador_Eventos extends javax.swing.JFrame {
     private javax.swing.JSpinner jSpinner2;
     // End of variables declaration//GEN-END:variables
 
-    public void crearArbol() {
-        ArbolNario arbol = new ArbolNario();
-        arbol.insertarHijo("", "¿Que PET presenta?", null);
-        arbol.insertarHijo("¿Que PET presenta?", "PET", null);
+    public void crearArbol(ArbolNario arbol) {
+        arbol.insertarHijo("", "PET", "");
         arbol.insertarHijo("PET", "Muy Frío", "1");
         arbol.insertarHijo("PET", "Frío", "2");
         arbol.insertarHijo("PET", "Fresco", "3");
@@ -180,51 +197,73 @@ public class Programador_Eventos extends javax.swing.JFrame {
         arbol.insertarHijo("PET", "Cálido", "7");
         arbol.insertarHijo("PET", "Caluroso", "8");
         arbol.insertarHijo("PET", "Muy Caluroso", "9");
-        arbol.insertarHijo("Muy Frío", "Temperatura", "");
-        arbol.insertarHijo("Muy Frío", "HR %", "");
-        arbol.insertarHijo("Muy Frío", "Viento", "");
-        arbol.insertarHijo("Muy Frío", "Precipitacion", "");
-        arbol.insertarHijo("Muy Frío", "CLO", "1.0");
-        arbol.insertarHijo("Frío", "Temperatura", "");
-        arbol.insertarHijo("Frío", "HR %", "");
-        arbol.insertarHijo("Frío", "Viento", "");
-        arbol.insertarHijo("Frio", "Precipitacion", "");
-        arbol.insertarHijo("Frío", "CLO", "");
-        arbol.insertarHijo("Fresco", "Temperatura", "");
-        arbol.insertarHijo("Fresco", "HR %", "");
-        arbol.insertarHijo("Fresco", "Viento", "");
-        arbol.insertarHijo("Fresco", "Precipitacion", "");
-        arbol.insertarHijo("Fresco", "CLO", "");
-        arbol.insertarHijo("Ligeramente Fresco", "Temperatura", "");
-        arbol.insertarHijo("Ligeramente Fresco", "HR %", "");
-        arbol.insertarHijo("Ligeramente Fresco", "Viento", "");
-        arbol.insertarHijo("Ligeramente Fresco", "Precipitacion", "");
-        arbol.insertarHijo("Ligeramente Fresco", "CLO", "");
-        arbol.insertarHijo("Confortable", "Temperatura", "");
-        arbol.insertarHijo("Confortable", "HR %", "");
-        arbol.insertarHijo("Confortable", "Viento", "");
-        arbol.insertarHijo("Confortable", "Precipitacion", "");
-        arbol.insertarHijo("Confortable", "CLO", "");
-        arbol.insertarHijo("Ligeramente Cálido", "Temperatura", "");
-        arbol.insertarHijo("Ligeramente Cálido", "HR %", "");
-        arbol.insertarHijo("Ligeramente Cálido", "Viento", "");
-        arbol.insertarHijo("Ligeramente Cálido", "Precipitacion", "");
-        arbol.insertarHijo("Ligeramente Cálido", "CLO", "");
-        arbol.insertarHijo("Cálido", "Temperatura", "");
-        arbol.insertarHijo("Cálido", "HR %", "");
-        arbol.insertarHijo("Cálido", "Viento", "");
-        arbol.insertarHijo("Cálido", "Precipitacion", "");
-        arbol.insertarHijo("Cálido", "CLO", "1.0");
-        arbol.insertarHijo("Caluroso", "Temperatura", "");
-        arbol.insertarHijo("Caluroso", "HR %", "");
-        arbol.insertarHijo("Caluroso", "Viento", "");
-        arbol.insertarHijo("Caluroso", "Precipitacion", "");
-        arbol.insertarHijo("Caluroso", "CLO", "1.0");
-        arbol.insertarHijo("Muy Caluroso", "Temperatura", "");
-        arbol.insertarHijo("Muy Caluroso", "HR %", "");
-        arbol.insertarHijo("Muy Caluroso", "Viento", "");
-        arbol.insertarHijo("Muy Caluroso", "Precipitacion", "");
-        arbol.insertarHijo("Muy Caluroso", "CLO", "1.0");
-        arbol.imprimirArbol(arbol);
+        arbol.insertarHijo("Muy Frío", "NO", "");
+        arbol.insertarHijo("Frío", "NO", "");
+        arbol.insertarHijo("Fresco", "Humedad3", "");
+        arbol.insertarHijo("Ligeramente Fresco", "Humedad4", "");
+        arbol.insertarHijo("Confortable", "Precipitacion5", "");
+        arbol.insertarHijo("Ligeramente Cálido", "Humedad6", "");
+        arbol.insertarHijo("Cálido", "Humedad7", "");
+        arbol.insertarHijo("Calurso", "NO", "");
+        arbol.insertarHijo("Muy Caluroso", "NO", "");
+        arbol.insertarHijo("Humedad3", "Precipitacion3", "");
+        arbol.insertarHijo("Humedad3", "NO", "");
+        arbol.insertarHijo("Humedad4", "Precipitacion4", "");
+        arbol.insertarHijo("Humedad4", "NO", "");
+        arbol.insertarHijo("Precipitacion5", "Viento5", "");
+        arbol.insertarHijo("Precipitacion5", "NO", "");
+        arbol.insertarHijo("Humedad6", "NO", "");
+        arbol.insertarHijo("Humedad6", "Precipitacion6", "");
+        arbol.insertarHijo("Humedad7", "NO", "");
+        arbol.insertarHijo("Humedad7", "Precipitacion7", "");
+        arbol.insertarHijo("Precipitacion3", "Viento3", "");
+        arbol.insertarHijo("Precipitacion3", "NO", "");
+        arbol.insertarHijo("Precipitacion4", "Viento4", "");
+        arbol.insertarHijo("Precipitacion4", "NO", "");
+        arbol.insertarHijo("Viento5", "SI", "");
+        arbol.insertarHijo("Viento5", "NO", "");
+        arbol.insertarHijo("Precipitacion6", "Viento6", "");
+        arbol.insertarHijo("Precipitacion6", "NO", "");
+        arbol.insertarHijo("Precipitacion7", "Viento7", "");
+        arbol.insertarHijo("Precipitacion7", "NO", "");
+        arbol.insertarHijo("Viento3", "SI", "");
+        arbol.insertarHijo("Viento3", "NO", "");
+        arbol.insertarHijo("Viento4", "SI", "");
+        arbol.insertarHijo("Viento4", "NO", "");
+        arbol.insertarHijo("Viento6", "SI", "");
+        arbol.insertarHijo("Viento6", "NO", "");
+        arbol.insertarHijo("Viento7", "SI", "");
+        arbol.insertarHijo("Viento7", "NO", "");
+    }
+    
+    public String setDecision() {
+        if(temperatura <= 32 ){ 
+            Pet = 1; return "NO"; 
+        }
+        if (temperatura > 32 && temperatura <= 53.6) {
+            Pet = 2 ; return "NO";
+        }
+        if((temperatura > 53.6 && temperatura <= 60.8) && humedad < 65 && precipitacion < 0.7 && viento < 30 ) {
+            Pet = 3; return "SI";
+        }
+        if((temperatura > 60.8 && temperatura <= 66.2) && humedad < 65 && precipitacion < 0.7 && viento < 30 ) {
+            Pet = 4; return "SI";
+        }
+        if((temperatura > 66.2 && temperatura <= 75.2) && precipitacion < 0.7 && viento < 30 ) {
+            Pet = 5; return "SI";
+        }
+        if((temperatura > 75.2 && temperatura <= 78.8) && humedad > 65 && precipitacion < 0.7 && viento < 30 ) {
+            Pet = 6; return "SI";
+        }
+        if((temperatura > 78.8 && temperatura <= 89.6) && humedad > 65 && precipitacion < 0.7 && viento < 30 ) {
+            Pet = 7; return "SI";
+        }
+        if((temperatura > 89.6 && temperatura <= 104)) {
+            Pet = 8; return "NO";
+        }
+        if(temperatura > 104 ) {
+            Pet = 9; return "NO";
+        }
+        return "NO";
     }
 }

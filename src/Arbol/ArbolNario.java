@@ -36,7 +36,7 @@ public class ArbolNario {
     private void insertarHijo(Nodo nodoActual, String padre, String theLabel, String theInfo){
         if (nodoActual.getLabel().equals(padre)) {
             nodoActual.nodosHijos.add(new Nodo(theLabel, theInfo));
-            System.out.println("Nodo insertado = " + theLabel);
+            //System.out.println("Nodo insertado = " + theLabel);
         } else {
             for (int i = 0; i < nodoActual.nodosHijos.size(); i++){
                 this.insertarHijo((Nodo)nodoActual.nodosHijos.get(i), padre, theLabel, theInfo);
@@ -87,13 +87,13 @@ public class ArbolNario {
         boolean exist = false;
         for (int i=0; i < indexNodos.size(); i++) {
             indexTemp = (Index)indexNodos.get(i);
-            if (indexTemp.getInfoNodo().equals(nodoActual.getInfo())) {
+            if (indexTemp.getLabelNodo().equals(nodoActual.getLabel())) {
                 exist = true;
                 if (esPreOrder) indexTemp.setIndexPreOrder(nodoActual.getPreOrder());
                 if (esPostOrder) indexTemp.setIndexPostOrder(nodoActual.getPostOrder());
             }
             if (!exist) {
-                indexNodos.add(new Index(nodoActual.getPreOrder(), nodoActual.getPostOrder(), nodoActual.getInfo()));
+                indexNodos.add(new Index(nodoActual.getPreOrder(), nodoActual.getPostOrder(), nodoActual.getLabel()));
             }
         }
     }
@@ -103,17 +103,17 @@ public class ArbolNario {
         System.out.println("num index " + indexNodos.size());
         for (int i = 0; i < indexNodos.size(); i++) {
             index = (Index)indexNodos.get(i);
-            System.out.println("Nodo " + index.getInfoNodo()+ " Preorden {" + index.getIndexPreOrder() + "} PostOrden {" + index.getIndexPostOrder() + "}" );   
+            System.out.println("Nodo " + index.getLabelNodo()+ " Preorden {" + index.getIndexPreOrder() + "} PostOrden {" + index.getIndexPostOrder() + "}" );   
         }
     }
     
-    public void getIndex(String nodoInfo) throws Exception {
+    public void getIndex(String nodoLabel) throws Exception {
         Index index;
         boolean exist = false;
         for (int i = 0; i < indexNodos.size(); i++) {
             index = (Index)indexNodos.get(i);
-            if (index.getInfoNodo().equals(nodoInfo)) {
-                System.out.println("Nodo " + index.getInfoNodo()+ " Preorden {" + index.getIndexPreOrder() + "} PostOrden {" + index.getIndexPostOrder() + "}" );
+            if (index.getLabelNodo().equals(nodoLabel)) {
+                System.out.println("Nodo " + index.getLabelNodo()+ " Preorden {" + index.getIndexPreOrder() + "} PostOrden {" + index.getIndexPostOrder() + "}" );
                 exist = true;
             }
             if (!exist) System.out.println("No se ha encontrado el nodo buscado"); 

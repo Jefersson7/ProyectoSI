@@ -26,7 +26,7 @@ public class recorrerArchivo {
     public double totalTemperatura = 0.0, totalHumedad = 0.0, totalViento = 0.0, totalPrecipitacion = 0.0;
     public int numRegistrosLeidos = 0;
     
-    public recorrerArchivo(File fileName, LocalDateTime fecha)  {
+    public void recorrer(File fileName, LocalDateTime fecha)  {
         
         try {
             FileInputStream fileInputStream = new FileInputStream(fileName);
@@ -39,6 +39,7 @@ public class recorrerArchivo {
                 totalHumedad += sheet.getRow(i).getCell(2).getNumericCellValue();
                 totalViento += sheet.getRow(i).getCell(3).getNumericCellValue();
                 totalPrecipitacion += sheet.getRow(i).getCell(4).getNumericCellValue();
+                numRegistrosLeidos++;
                 if(ldt.equals(fecha)) break;
             }
         } catch (Exception e) {

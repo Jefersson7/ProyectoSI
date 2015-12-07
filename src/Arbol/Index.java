@@ -13,7 +13,7 @@ public class Index {
     
     private int indexPreOrder=-1;
     private int indexPostOrder=-1;
-    private String infoNodo="";
+    private String labelNodo="";
     
     public Index(int preOrder, int postOrder, String infoNodo) {
         this.setIndexPreOrder(preOrder);
@@ -37,11 +37,11 @@ public class Index {
         this.indexPreOrder = indexPreOrder;
     }
     
-    public String getInfoNodo() {
-        return infoNodo;
+    public String getLabelNodo() {
+        return labelNodo;
     }
     
     public void setInfoNodo(String infoNodo) {
-        this.infoNodo = infoNodo;
+        this.labelNodo = infoNodo;
     }
 }
