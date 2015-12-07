@@ -26,7 +26,7 @@ public class Programador_Eventos extends javax.swing.JFrame {
      * Creates new form Programador_Eventos
      */
     public double temperatura, humedad, viento, precipitacion, clo;
-    public String date, decision, PetDescription;
+    public String date, decision, PetDescription, recomendaciones;
     public int Pet;
     public LocalDateTime fecha;
     
@@ -309,12 +309,26 @@ public class Programador_Eventos extends javax.swing.JFrame {
             }
         }
         r.jLabel2.setText("La decision tomada es "+decision + " " + Reason);
-        r.jTextArea1.setText("Temperatura = "+temperatura+" °C"+"\n"
+        r.jTextArea1.setText("Temperatura = "+temperatura+" °F"+"\n"
                 +"Pet = "+PetDescription+"\n"
                 + "Humedad = "+humedad+" %"+"\n"
                 +"Viento = "+viento+" %"+"\n"
                 +"Precipitacion = "+precipitacion+" %"+"\n"
                 +"clo = "+clo);
+        if(decision == "NO") {
+            recomendaciones = "Las recomendaciones no están disponibles";
+        } else {
+            if (clo == 0.9) {
+                recomendaciones = "";
+            } else if (clo == 0.8) {
+                recomendaciones = "";
+            } else if (clo == 0.7) {
+                recomendaciones = "";
+            } else if (clo == 0.6) {
+                recomendaciones = "";
+            } else recomendaciones = "";
+        }
+        r.jTextArea2.setText(recomendaciones);
         r.setVisible(true);
     }
 }
