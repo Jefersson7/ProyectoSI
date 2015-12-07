@@ -138,9 +138,7 @@ public class Programador_Eventos extends javax.swing.JFrame {
         decision = setDecision();
         PetDescription = ((Nodo)arbol.raiz.nodosHijos.get(Pet-1)).getLabel();
         System.out.println(PetDescription);
-        Resultados results = new Resultados();
-        results.jLabel1.setText(decision);
-        results.setVisible(true);
+        mostrarResultados();
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**
@@ -243,20 +241,25 @@ public class Programador_Eventos extends javax.swing.JFrame {
         if (temperatura > 32 && temperatura <= 53.6) {
             Pet = 2 ; return "NO";
         }
-        if((temperatura > 53.6 && temperatura <= 60.8) && humedad < 65 && precipitacion < 0.7 && viento < 30 ) {
-            Pet = 3; return "SI";
+        if(temperatura > 53.6 && temperatura <= 60.8)  {
+            Pet = 3; 
+            if(humedad < 65 && precipitacion < 0.7 && viento < 30 ) return "SI";
         }
-        if((temperatura > 60.8 && temperatura <= 66.2) && humedad < 65 && precipitacion < 0.7 && viento < 30 ) {
-            Pet = 4; return "SI";
+        if(temperatura > 60.8 && temperatura <= 66.2) {
+            Pet = 4; 
+            if(humedad < 65 && precipitacion < 0.7 && viento < 30 )  return "SI";
         }
-        if((temperatura > 66.2 && temperatura <= 75.2) && precipitacion < 0.7 && viento < 30 ) {
-            Pet = 5; return "SI";
+        if(temperatura > 66.2 && temperatura <= 75.2) {
+            Pet = 5; 
+            if(precipitacion < 0.7 && viento < 30 )  return "SI";
         }
-        if((temperatura > 75.2 && temperatura <= 78.8) && humedad > 65 && precipitacion < 0.7 && viento < 30 ) {
-            Pet = 6; return "SI";
+        if(temperatura > 75.2 && temperatura <= 78.8) {
+            Pet = 6; 
+            if(humedad > 65 && precipitacion < 0.7 && viento < 30 )  return "SI";
         }
-        if((temperatura > 78.8 && temperatura <= 89.6) && humedad > 65 && precipitacion < 0.7 && viento < 30 ) {
-            Pet = 7; return "SI";
+        if(temperatura > 78.8 && temperatura <= 89.6) {
+            Pet = 7; 
+            if(humedad > 65 && precipitacion < 0.7 && viento < 30 )  return "SI";
         }
         if((temperatura > 89.6 && temperatura <= 104)) {
             Pet = 8; return "NO";
@@ -265,5 +268,46 @@ public class Programador_Eventos extends javax.swing.JFrame {
             Pet = 9; return "NO";
         }
         return "NO";
+    }
+    
+    public void mostrarResultados() {
+        String Reason = "";
+        Resultados r = new Resultados();
+        r.jLabel1.setText("Fecha y Hora del Evento: " + fecha.toLocalDate().toString()
+            + " a las "+ fecha.toLocalTime().toString() );
+        if(decision == "NO") {
+            if(Pet == 1 || Pet == 2) {
+                Reason = "Por temperaturas muy bajas.";
+            } else if (Pet == 8 || Pet == 9) {
+                Reason = "Por temperaturas muy altas.";
+            } else if(Pet == 3 || Pet == 4) {
+                if( humedad >= 65) {
+                    Reason = "Por alta humedad ";
+                } else if (precipitacion >= 0.7) {
+                    Reason = "Por alta precipitacion ";
+                } else if(viento >= 30) {
+                    Reason = "Por altos vientos ";
+                }
+                Reason += "a temperaturas bajas";
+            } else if(Pet == 6 || Pet == 7) {
+                if( humedad < 65) {
+                    Reason = "Por baja humedad ";
+                } else if (precipitacion >= 0.7) {
+                    Reason = "Por alta precipitacion ";
+                } else if(viento >= 30) {
+                    Reason = "Por altos vientos ";
+                }
+                Reason += "a temperaturas altas";
+            } else if(Pet == 5) {
+                if (precipitacion >= 0.7) {
+                    Reason = "Por alta precipitacion ";
+                } else if(viento >= 30) {
+                    Reason = "Por altos vientos ";
+                }
+                Reason += " a temperaturas medias";
+            }
+        }
+        r.jLabel2.setText("La decision tomada es "+decision + " " + Reason);
+        r.setVisible(true);
     }
 }
