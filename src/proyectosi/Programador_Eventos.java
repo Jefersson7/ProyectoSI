@@ -136,6 +136,7 @@ public class Programador_Eventos extends javax.swing.JFrame {
         crearArbol(arbol);
         //arbol.imprimirArbol(arbol);
         decision = setDecision();
+        System.out.println(decision);
         PetDescription = ((Nodo)arbol.raiz.nodosHijos.get(Pet-1)).getLabel();
         System.out.println(PetDescription);
         mostrarResultados();
@@ -242,23 +243,23 @@ public class Programador_Eventos extends javax.swing.JFrame {
             Pet = 2 ; return "NO";
         }
         if(temperatura > 53.6 && temperatura <= 60.8)  {
-            Pet = 3; 
+            Pet = 3; clo = 0.9; 
             if(humedad < 65 && precipitacion < 70 && viento < 30 ) return "SI";
         }
         if(temperatura > 60.8 && temperatura <= 66.2) {
-            Pet = 4; 
+            Pet = 4; clo = 0.8;
             if(humedad < 65 && precipitacion < 70 && viento < 30 )  return "SI";
         }
         if(temperatura > 66.2 && temperatura <= 75.2) {
-            Pet = 5; 
+            Pet = 5; clo = 0.7;
             if(precipitacion < 70 && viento < 30 )  return "SI";
         }
         if(temperatura > 75.2 && temperatura <= 78.8) {
-            Pet = 6; 
+            Pet = 6; clo = 0.6;
             if(humedad > 65 && precipitacion < 70 && viento < 30 )  return "SI";
         }
         if(temperatura > 78.8 && temperatura <= 89.6) {
-            Pet = 7; 
+            Pet = 7; clo = 0.55;
             if(humedad > 65 && precipitacion < 70 && viento < 30 )  return "SI";
         }
         if((temperatura > 89.6 && temperatura <= 104)) {
@@ -308,6 +309,12 @@ public class Programador_Eventos extends javax.swing.JFrame {
             }
         }
         r.jLabel2.setText("La decision tomada es "+decision + " " + Reason);
+        r.jTextArea1.setText("Temperatura = "+temperatura+" °C"+"\n"
+                +"Pet = "+PetDescription+"\n"
+                + "Humedad = "+humedad+" %"+"\n"
+                +"Viento = "+viento+" %"+"\n"
+                +"Precipitacion = "+precipitacion+" %"+"\n"
+                +"clo = "+clo);
         r.setVisible(true);
     }
 }
